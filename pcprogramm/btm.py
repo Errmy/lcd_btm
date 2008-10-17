@@ -101,7 +101,6 @@ while True:
             ser.write('1' + bearbeiten(artist()) + '\n')
             artist_speicher = artist()
             
-    #github.com
         if (title() != title_speicher) or (j != jspeicher):
             if len(title()) > 20:
                 hilfe = title()
