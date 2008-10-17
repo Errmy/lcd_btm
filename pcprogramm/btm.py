@@ -87,12 +87,12 @@ sekundenspeicher = 0
 last = 0
 
 ser = serial.Serial('/dev/rfcomm0', 19200)
-time.sleep(3) # 3 sekunden schlaf wegen verbindungsaufbau
+time.sleep(2) # 3 sekunden schlaf wegen verbindungsaufbau
 ser.write('1' + bearbeiten(leer) + '\n')
 ser.write('2' + bearbeiten(leer) + '\n')
 ser.write('3' + bearbeiten(leer) + '\n')
 ser.write('4' + bearbeiten(leer) + '\n') 
-# loeschen der stoerenden CONNECT anzeige auf dem display
+#loeschen der stoerenden CONNECT anzeige auf dem display
 
 while True:
     if (commands.getoutput('dcop amarok player status') != 'call failed' ):
