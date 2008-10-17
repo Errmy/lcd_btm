@@ -85,6 +85,7 @@ zeit_speicher = ''
 jspeicher = 0
 sekundenspeicher = 0
 last = 0
+fault_sended = False
 
 ser = serial.Serial('/dev/rfcomm0', 19200)
 time.sleep(2) # 3 sekunden schlaf wegen verbindungsaufbau
@@ -97,6 +98,7 @@ ser.write('4' + bearbeiten(leer) + '\n')
 while True:
     if (commands.getoutput('dcop amarok player status') != 'call failed' ):
         
+        fault_sended = False
         if artist() != artist_speicher:
             ser.write('1' + bearbeiten(artist()) + '\n')
             artist_speicher = artist()
@@ -130,9 +132,12 @@ while True:
             ser.write('3' + bearbeiten(time_played() + ' ' + bit_rate()) + '\n')
             time_speicher = time_played()
     else:
-        ser.write('1' + bearbeiten('Amarok is not') + '\n')
-        ser.write('2' + bearbeiten('playing or an') + '\n')
-        ser.write('3' + bearbeiten('Error happened!') + '\n')
+        if not fault_sended:
+            ser.write('1' + bearbeiten('Amarok is not') + '\n')
+            ser.write('2' + bearbeiten('playing or an') + '\n')
+            ser.write('3' + bearbeiten('Error happened!') + '\n')
+            print "Fehler gesendet"
+            fault_sended = True
     if date_time() != zeit_speicher:
         ser.write('4' + bearbeiten(date_time()) + '\n')
         zeit_speicher = date_time()
